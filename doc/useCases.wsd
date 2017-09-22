@@ -1,0 +1,23 @@
+@startuml stockApp 
+left to right direction
+skinparam packageStyle rectangle
+
+actor customer
+actor clerk
+rectangle checkout {
+  customer -- (checkout)
+  (checkout) .> (payment) : <<include>>
+  (help) .> (checkout) : <<extends>>
+  (checkout) -- clerk
+}
+
+actor user
+actor admin
+
+admin -> (CRUD\n sobre users)
+user -> (CRUD redes)
+user -> (CRUD dispositivos)
+user -> (CRUD EAPs)
+user -> (CRUD Consultorios)
+user -> (busquedas)
+@enduml
