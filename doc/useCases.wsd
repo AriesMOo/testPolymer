@@ -1,23 +1,44 @@
 @startuml stockApp 
 left to right direction
-skinparam packageStyle rectangle
-
-actor customer
-actor clerk
-rectangle checkout {
-  customer -- (checkout)
-  (checkout) .> (payment) : <<include>>
-  (help) .> (checkout) : <<extends>>
-  (checkout) -- clerk
-}
 
 actor user
 actor admin
+actor stockApp
+admin -|> user
 
-admin -> (CRUD\n sobre users)
-user -> (CRUD redes)
-user -> (CRUD dispositivos)
-user -> (CRUD EAPs)
-user -> (CRUD Consultorios)
-user -> (busquedas)
+admin - (CRUD\n users)
+admin - (CRUD\n tipos de dispositivos)
+user - (CRUD dispositivos)
+
+stockApp - (mostrar estado sistema)
+
+rectangle Centros_Salud {
+  user - (crear EAPs)
+  user - (editar EAPs)
+  user - (borrar EAPs)
+}
+
+rectangle Consultorios {
+  user - (crear consultorio) 
+  user - (editar consultorio)
+  user - (borrar consultorio)
+}
+
+rectangle Redes {
+  user - (añadir red)
+  user - (editar redes)
+  user - (borrar redes)
+}
+
+Consultorios <|- Centros_Salud
+(CRUD dispositivos) --> (asociar a EAP) : <<include>>
+(crear consultorio) --> (asociar a EAP) : <<include>>
+(borrar redes) --> (borrar o reasignar [a otra red] dispositivos) : <<include>>
+(borrar consultorio) --> (borrar o reasignar [a otro EAP] redes) : <<include>>
+(borrar o reasignar [a otro EAP] redes) --> (borrar o reasignar [a otra red] dispositivos) : <<include>>
+(borrar EAPs) --> (borrar o reasignar [a otro EAP] redes) : <<include>>
+
+rectangle Busquedas {
+  user - (busquedas)
+}
 @enduml
