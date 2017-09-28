@@ -1,16 +1,23 @@
 @startuml stockApp 
 left to right direction
+skinparam packageStyle rectangle
 
 actor user
 actor admin
 actor stockApp
+
 admin -|> user
+
+newpage
+
+stockApp - (borrar o reasignar [a otro EAP] redes)
 
 admin - (CRUD\n users)
 admin - (CRUD\n tipos de dispositivos)
 user - (CRUD dispositivos)
 
 stockApp - (mostrar estado sistema)
+stockApp - (asociar a EAP)
 
 rectangle Centros_Salud {
   user - (crear EAPs)
